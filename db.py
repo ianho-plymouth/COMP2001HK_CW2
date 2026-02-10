@@ -19,3 +19,16 @@ conn_str = (
 )
 
 Conn = pyodbc.connect(conn_str)
+
+if __name__ == "__main__":
+    import pyodbc
+    try:
+        cur = Conn.cursor()
+        cur.execute("SELECT @@VERSION AS version, DB_NAME() AS db, SYSTEM_USER AS [user]")
+        row = cur.fetchone()
+        print("Connection successful!")
+        print("SQL Server Version：", row.version)
+        print("Database：", row.db)
+        print("User ID：", row.user)
+    except pyodbc.Error as e:
+        print("Connection Failed：", e)
