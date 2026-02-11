@@ -1,8 +1,7 @@
-
 openapi: 3.0.3
 info:
   title: CW2 Trails API
-  version: '1.2.0'
+  version: "1.2.0"
 servers:
   - url: /
 paths:
@@ -24,21 +23,21 @@ paths:
                 password:
                   type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
                 type: object
-        '401':
+        "401":
           description: Unauthorized
-        '400':
+        "400":
           description: Error
   /health:
     get:
       operationId: controllers.health.ping
       responses:
-        '200':
+        "200":
           description: OK
   /users:
     post:
@@ -48,15 +47,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserCreate'
+              $ref: "#/components/schemas/UserCreate"
       responses:
-        '201':
+        "201":
           description: Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
-        '400':
+                $ref: "#/components/schemas/User"
+        "400":
           description: Error
   /users/{email}:
     get:
@@ -68,13 +67,13 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
-        '400':
+                $ref: "#/components/schemas/User"
+        "400":
           description: Error
     put:
       operationId: controllers.users.update_user
@@ -89,15 +88,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserUpdate'
+              $ref: "#/components/schemas/UserUpdate"
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
-        '400':
+                $ref: "#/components/schemas/User"
+        "400":
           description: Error
     delete:
       operationId: controllers.users.delete_user
@@ -108,23 +107,23 @@ paths:
           schema:
             type: string
       responses:
-        '204':
+        "204":
           description: No Content
-        '400':
+        "400":
           description: Error
   /trails:
     get:
       operationId: controllers.trails.list_trails
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Trail'
-        '400':
+                  $ref: "#/components/schemas/Trail"
+        "400":
           description: Error
     post:
       operationId: controllers.trails.create_trail
@@ -144,17 +143,17 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TrailCreate'
+              $ref: "#/components/schemas/TrailCreate"
       responses:
-        '201':
+        "201":
           description: Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Trail'
-        '400':
+                $ref: "#/components/schemas/Trail"
+        "400":
           description: Error
-        '401':
+        "401":
           description: Unauthorized
   /trails/{trailid}:
     get:
@@ -166,13 +165,13 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Trail'
-        '400':
+                $ref: "#/components/schemas/Trail"
+        "400":
           description: Error
     put:
       operationId: controllers.trails.update_trail
@@ -197,17 +196,17 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TrailUpdate'
+              $ref: "#/components/schemas/TrailUpdate"
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Trail'
-        '400':
+                $ref: "#/components/schemas/Trail"
+        "400":
           description: Error
-        '401':
+        "401":
           description: Unauthorized
     delete:
       operationId: controllers.trails.delete_trail
@@ -228,25 +227,25 @@ paths:
           schema:
             type: string
       responses:
-        '204':
+        "204":
           description: No Content
-        '400':
+        "400":
           description: Error
-        '401':
+        "401":
           description: Unauthorized
   /trails/public/summary:
     get:
       operationId: controllers.trails.public_summary
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/TrailSummary'
-        '400':
+                  $ref: "#/components/schemas/TrailSummary"
+        "400":
           description: Error
   /locationpoints:
     get:
@@ -258,15 +257,15 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/LocationPoint'
-        '400':
+                  $ref: "#/components/schemas/LocationPoint"
+        "400":
           description: Error
     post:
       operationId: controllers.locationpoints.create_point
@@ -286,17 +285,17 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/LocationPointCreate'
+              $ref: "#/components/schemas/LocationPointCreate"
       responses:
-        '201':
+        "201":
           description: Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LocationPoint'
-        '400':
+                $ref: "#/components/schemas/LocationPoint"
+        "400":
           description: Error
-        '401':
+        "401":
           description: Unauthorized
   /locationpoints/{pointid}:
     get:
@@ -308,13 +307,13 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LocationPoint'
-        '400':
+                $ref: "#/components/schemas/LocationPoint"
+        "400":
           description: Error
     put:
       operationId: controllers.locationpoints.update_point
@@ -339,17 +338,17 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/LocationPointUpdate'
+              $ref: "#/components/schemas/LocationPointUpdate"
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LocationPoint'
-        '400':
+                $ref: "#/components/schemas/LocationPoint"
+        "400":
           description: Error
-        '401':
+        "401":
           description: Unauthorized
     delete:
       operationId: controllers.locationpoints.delete_point
@@ -370,25 +369,25 @@ paths:
           schema:
             type: string
       responses:
-        '204':
+        "204":
           description: No Content
-        '400':
+        "400":
           description: Error
-        '401':
+        "401":
           description: Unauthorized
   /views/trails/summary:
     get:
       operationId: controllers.views.trail_summary_view
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/TrailSummary'
-        '400':
+                  $ref: "#/components/schemas/TrailSummary"
+        "400":
           description: Error
 components:
   schemas:
