@@ -1,0 +1,591 @@
+
+openapi: 3.0.3
+info:
+  title: CW2 Trails API
+  version: '1.2.0'
+servers:
+  - url: /
+paths:
+  /auth/login:
+    post:
+      operationId: controllers.auth.login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          description: Unauthorized
+        '400':
+          description: Error
+  /health:
+    get:
+      operationId: controllers.health.ping
+      responses:
+        '200':
+          description: OK
+  /users:
+    post:
+      operationId: controllers.users.create_user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Error
+  /users/{email}:
+    get:
+      operationId: controllers.users.get_user
+      parameters:
+        - name: email
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Error
+    put:
+      operationId: controllers.users.update_user
+      parameters:
+        - name: email
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUpdate'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Error
+    delete:
+      operationId: controllers.users.delete_user
+      parameters:
+        - name: email
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Error
+  /trails:
+    get:
+      operationId: controllers.trails.list_trails
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Trail'
+        '400':
+          description: Error
+    post:
+      operationId: controllers.trails.create_trail
+      parameters:
+        - name: X-Auth-Email
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: X-Auth-Password
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TrailCreate'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Trail'
+        '400':
+          description: Error
+        '401':
+          description: Unauthorized
+  /trails/{trailid}:
+    get:
+      operationId: controllers.trails.get_trail
+      parameters:
+        - name: trailid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Trail'
+        '400':
+          description: Error
+    put:
+      operationId: controllers.trails.update_trail
+      parameters:
+        - name: trailid
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: X-Auth-Email
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: X-Auth-Password
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TrailUpdate'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Trail'
+        '400':
+          description: Error
+        '401':
+          description: Unauthorized
+    delete:
+      operationId: controllers.trails.delete_trail
+      parameters:
+        - name: trailid
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: X-Auth-Email
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: X-Auth-Password
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Error
+        '401':
+          description: Unauthorized
+  /trails/public/summary:
+    get:
+      operationId: controllers.trails.public_summary
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TrailSummary'
+        '400':
+          description: Error
+  /locationpoints:
+    get:
+      operationId: controllers.locationpoints.list_points
+      parameters:
+        - name: trailid
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LocationPoint'
+        '400':
+          description: Error
+    post:
+      operationId: controllers.locationpoints.create_point
+      parameters:
+        - name: X-Auth-Email
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: X-Auth-Password
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LocationPointCreate'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationPoint'
+        '400':
+          description: Error
+        '401':
+          description: Unauthorized
+  /locationpoints/{pointid}:
+    get:
+      operationId: controllers.locationpoints.get_point
+      parameters:
+        - name: pointid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationPoint'
+        '400':
+          description: Error
+    put:
+      operationId: controllers.locationpoints.update_point
+      parameters:
+        - name: pointid
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: X-Auth-Email
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: X-Auth-Password
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LocationPointUpdate'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationPoint'
+        '400':
+          description: Error
+        '401':
+          description: Unauthorized
+    delete:
+      operationId: controllers.locationpoints.delete_point
+      parameters:
+        - name: pointid
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: X-Auth-Email
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: X-Auth-Password
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Error
+        '401':
+          description: Unauthorized
+  /views/trails/summary:
+    get:
+      operationId: controllers.views.trail_summary_view
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TrailSummary'
+        '400':
+          description: Error
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        userid:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+    UserCreate:
+      type: object
+      required:
+        - name
+        - email
+        - password
+      properties:
+        name:
+          type: string
+          maxLength: 50
+        email:
+          type: string
+          maxLength: 100
+        password:
+          type: string
+          maxLength: 50
+    UserUpdate:
+      type: object
+      required:
+        - name
+        - password
+      properties:
+        name:
+          type: string
+        password:
+          type: string
+    Trail:
+      type: object
+      properties:
+        trailid:
+          type: string
+        trailname:
+          type: string
+        description:
+          type: string
+          nullable: true
+        distance:
+          type: integer
+        elevationgain:
+          type: integer
+        difficulty:
+          type: string
+        routetype:
+          type: string
+        estimatedtime:
+          type: integer
+          nullable: true
+        ispublic:
+          type: integer
+        userid:
+          type: integer
+    TrailCreate:
+      type: object
+      required:
+        - trailid
+        - trailname
+        - distance
+        - elevationgain
+        - difficulty
+        - routetype
+        - ispublic
+        - userid
+      properties:
+        trailid:
+          type: string
+        trailname:
+          type: string
+        description:
+          type: string
+          nullable: true
+        distance:
+          type: integer
+        elevationgain:
+          type: integer
+        difficulty:
+          type: string
+        routetype:
+          type: string
+        estimatedtime:
+          type: integer
+          nullable: true
+        ispublic:
+          type: integer
+        userid:
+          type: integer
+    TrailUpdate:
+      type: object
+      properties:
+        trailname:
+          type: string
+        description:
+          type: string
+          nullable: true
+        distance:
+          type: integer
+        elevationgain:
+          type: integer
+        difficulty:
+          type: string
+        routetype:
+          type: string
+        estimatedtime:
+          type: integer
+          nullable: true
+        ispublic:
+          type: integer
+        userid:
+          type: integer
+    TrailSummary:
+      type: object
+      properties:
+        trailid:
+          type: string
+        trailname:
+          type: string
+        description:
+          type: string
+        distance:
+          type: integer
+        elevationgain:
+          type: integer
+        difficulty:
+          type: string
+        routetype:
+          type: string
+        estimatedtime:
+          type: integer
+        ispublic:
+          type: integer
+        LocationPointsCount:
+          type: integer
+    LocationPoint:
+      type: object
+      properties:
+        pointid:
+          type: string
+        trailid:
+          type: string
+        latitude:
+          type: number
+          format: float
+          nullable: true
+        longitude:
+          type: number
+          format: float
+          nullable: true
+        altitude:
+          type: integer
+          nullable: true
+    LocationPointCreate:
+      type: object
+      required:
+        - pointid
+        - trailid
+      properties:
+        pointid:
+          type: string
+        trailid:
+          type: string
+        latitude:
+          type: number
+          format: float
+          nullable: true
+        longitude:
+          type: number
+          format: float
+          nullable: true
+        altitude:
+          type: integer
+          nullable: true
+    LocationPointUpdate:
+      type: object
+      properties:
+        trailid:
+          type: string
+        latitude:
+          type: number
+          format: float
+          nullable: true
+        longitude:
+          type: number
+          format: float
+          nullable: true
+        altitude:
+          type: integer
+          nullable: true
