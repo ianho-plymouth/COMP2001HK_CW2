@@ -1,10 +1,14 @@
 import pyodbc
+import os
+from dotenv import load_dotenv
 
-server = "dist-6-505.uopnet.plymouth.ac.uk"
-database = "COMP2001_HK_CHo"
-username = "HK_CHo"
-password = "k6ZyLUY9"
-driver = "{ODBC Driver 18 for SQL Server}"
+load_dotenv(override=False)
+
+server = os.getenv("DB_SERVER")
+database = os.getenv("DB_NAME")
+username = os.getenv("DB_USER")
+password = os.getenv("DB_PASSWORD")
+driver = os.getenv("ODBC_DRIVER", "{ODBC Driver 18 for SQL Server}")
 conn_str = (
     f"DRIVER={driver};"
     f"SERVER={server};"
