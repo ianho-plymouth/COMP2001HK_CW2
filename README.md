@@ -30,7 +30,7 @@ This README walks you through setup, run and testing step by step.
 
 
 ## 5) Run locally
-- Run the following command for start the app
+- Run the following command for start the application
 - `python app.py`
 - Swagger UI: http://localhost:8000/ui
 - OpenAPI JSON: http://localhost:8000/openapi.json
