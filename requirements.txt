@@ -3,3 +3,4 @@ connexion[swagger-ui]
 pyodbc
 flask-cors
 requests
+python-dotenv
